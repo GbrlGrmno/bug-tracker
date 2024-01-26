@@ -1,0 +1,13 @@
+package com.gabrielgermano.bugtrackerbackend;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BugTrackerBackendApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BugTrackerBackendApplication.class, args);
+	}
+
+}
