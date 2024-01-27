@@ -11,16 +11,12 @@ import java.util.*;
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
-    private User user;
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        Set<GrantedAuthority> roles = new HashSet<>();
-
-        roles.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
-
-        return roles;
+        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
     @Override
