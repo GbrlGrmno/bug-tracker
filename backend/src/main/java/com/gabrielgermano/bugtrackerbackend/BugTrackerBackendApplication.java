@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @SpringBootApplication
 public class BugTrackerBackendApplication {
 
@@ -23,6 +25,7 @@ public class BugTrackerBackendApplication {
 					.username("admin")
 					.password(passwordEncoder.encode("admin"))
 					.email("admin@admin.com")
+					.role(Role.ADMIN)
 					.build();
 			repository.save(admin);
 		};

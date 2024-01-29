@@ -19,12 +19,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
 
+    @JsonIgnore
     private String password;
 
     @Column(unique = true)
     private String email;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 
     @ManyToOne
     private Team team;

@@ -12,7 +12,14 @@ import lombok.NoArgsConstructor;
 
 public enum Role {
 
-    ADMIN,
-    DEVELOPER
+    ADMIN("Admin"),
+    DEVELOPER("Developer");
+
+    private String role;
+
+    Role(String role) {
+        this.role = role;
+    }
+
 
 }

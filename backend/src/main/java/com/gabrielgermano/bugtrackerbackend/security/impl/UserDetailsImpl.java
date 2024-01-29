@@ -1,5 +1,6 @@
 package com.gabrielgermano.bugtrackerbackend.security.impl;
 
+import com.gabrielgermano.bugtrackerbackend.model.Role;
 import com.gabrielgermano.bugtrackerbackend.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +16,8 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_DEVELOPER"));
+        final String ROLE_PREFIX = "ROLE_";
+        return List.of(new SimpleGrantedAuthority(ROLE_PREFIX + user.getRole()));
     }
     @Override
     public String getPassword() {
