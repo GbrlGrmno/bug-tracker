@@ -13,9 +13,6 @@ import lombok.NoArgsConstructor;
 public enum Role {
 
     ADMIN,
-    DEVELOPER,
-    TESTER
-
-
+    DEVELOPER
 
 }
