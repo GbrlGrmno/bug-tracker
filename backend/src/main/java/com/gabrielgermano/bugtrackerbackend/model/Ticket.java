@@ -7,10 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Data
@@ -31,6 +34,9 @@ public class Ticket {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @CreatedBy
+    private Long createdBy;
+
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
@@ -42,14 +48,6 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
-
-    /* TODO: enable auditing in the future
-    *   to use @CreatedBy annotation
-    *   on User field
-    * */
-
-    @ManyToOne
-    private User author;
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
     private List<Comment> comments;

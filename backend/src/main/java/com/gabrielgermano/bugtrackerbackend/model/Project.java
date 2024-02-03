@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedBy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,6 +31,9 @@ public class Project {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @CreatedBy
+    private Long createdBy;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Ticket> tickets;

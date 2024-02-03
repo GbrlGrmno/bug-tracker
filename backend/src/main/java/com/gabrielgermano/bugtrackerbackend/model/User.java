@@ -2,18 +2,18 @@ package com.gabrielgermano.bugtrackerbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.List;
 import java.util.Set;
 
+
 @AllArgsConstructor @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Data @Builder
 @Entity
-public class User {
+public class User  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +30,6 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
-
-    @ManyToOne
-    private Team team;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)

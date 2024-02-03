@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
 
 import java.time.LocalDateTime;
 
@@ -27,13 +28,9 @@ public class Comment {
     @ManyToOne
     private Ticket ticket;
 
-    /* TODO: enable auditing in the future
-     *   to use @CreatedBy annotation
-     *   on User field
-     * */
 
-    @ManyToOne
-    private User author;
+    @CreatedBy
+    private Long createdBy;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
