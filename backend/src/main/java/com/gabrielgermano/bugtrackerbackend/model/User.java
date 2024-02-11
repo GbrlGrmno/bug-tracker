@@ -8,9 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.List;
 import java.util.Set;
 
-
-@AllArgsConstructor @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor @NoArgsConstructor
 @Data @Builder
 @Entity
 public class User  {

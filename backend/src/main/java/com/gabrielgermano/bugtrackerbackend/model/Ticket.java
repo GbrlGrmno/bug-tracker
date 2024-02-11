@@ -19,6 +19,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Ticket {
 
