@@ -30,9 +30,7 @@ public class User  {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Project> projects;
+
 
 
 

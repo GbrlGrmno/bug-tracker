@@ -40,12 +40,8 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Ticket> tickets;
 
-    @ManyToMany
-    @JoinTable(name = "users_projects",
-        joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private Set<ProjectMember> projectMembers;
 
 
 
