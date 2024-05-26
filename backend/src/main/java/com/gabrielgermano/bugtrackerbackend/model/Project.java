@@ -1,5 +1,6 @@
 package com.gabrielgermano.bugtrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -38,7 +40,7 @@ public class Project {
     private Long createdBy;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private Set<Ticket> tickets;
+    private List<Ticket> tickets;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<ProjectMember> projectMembers;
@@ -51,6 +53,10 @@ public class Project {
 
 
         projectMembers.add(projectMember);
+    }
+
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
     }
 
 

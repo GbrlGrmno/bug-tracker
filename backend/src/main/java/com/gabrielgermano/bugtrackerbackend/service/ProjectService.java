@@ -10,10 +10,10 @@ import com.gabrielgermano.bugtrackerbackend.response.ProjectResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -48,8 +48,8 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-
-
-
-
+    public Set<ProjectMember> getAllMembers(Long projectId) {
+        Project project = projectRepository.findById(projectId).orElseThrow();
+        return project.getProjectMembers();
+    }
 }

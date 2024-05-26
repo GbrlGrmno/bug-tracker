@@ -1,5 +1,6 @@
 package com.gabrielgermano.bugtrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class Comment {
     @Column(nullable = false)
     private String content;
 
+    @JsonIgnore
     @ManyToOne
     private Ticket ticket;
 

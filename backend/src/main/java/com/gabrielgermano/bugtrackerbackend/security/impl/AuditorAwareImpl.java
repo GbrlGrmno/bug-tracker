@@ -28,9 +28,10 @@ public class AuditorAwareImpl implements AuditorAware<Long> {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+//        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
 
-        return Optional.of(user.getId());
+
+        return Optional.of(userDetails.getId());
     }
 
 }

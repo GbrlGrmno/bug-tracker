@@ -1,10 +1,8 @@
 package com.gabrielgermano.bugtrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
@@ -53,8 +51,8 @@ public class Ticket {
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id")
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     private Project project;
 
 
