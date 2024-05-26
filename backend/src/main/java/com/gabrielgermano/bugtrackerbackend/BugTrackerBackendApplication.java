@@ -28,6 +28,30 @@ public class BugTrackerBackendApplication {
 					.role(Role.ADMIN)
 					.build();
 			repository.save(admin);
+
+			User developer1 = User.builder()
+					.username("dev1")
+					.password(passwordEncoder.encode("123"))
+					.email("dev1@gmail.com")
+					.role(Role.DEVELOPER)
+					.build();
+			repository.save(developer1);
+
+			User developer2 = User.builder()
+					.username("dev2")
+					.password(passwordEncoder.encode("123"))
+					.email("dev2@gmail.com")
+					.role(Role.DEVELOPER)
+					.build();
+			repository.save(developer2);
+
+			User developer3 = User.builder()
+					.username("dev3")
+					.password(passwordEncoder.encode("123"))
+					.email("dev3@gmail.com")
+					.role(Role.DEVELOPER)
+					.build();
+			repository.save(developer3);
 		};
 	}
 }

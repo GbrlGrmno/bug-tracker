@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 public enum Role {
 
     ADMIN("Admin"),
-    DEVELOPER("Developer");
+    DEVELOPER("Developer"),
+    PROJECT_MANAGER("Project Manager");
 
     private String role;
 

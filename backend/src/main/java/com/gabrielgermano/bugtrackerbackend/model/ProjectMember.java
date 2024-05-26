@@ -1,14 +1,14 @@
 package com.gabrielgermano.bugtrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
-@Data @Builder
+@Getter @Setter
+@EqualsAndHashCode(exclude= "project")
+@Builder
 public class ProjectMember {
 
     @Id
@@ -19,6 +19,7 @@ public class ProjectMember {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;

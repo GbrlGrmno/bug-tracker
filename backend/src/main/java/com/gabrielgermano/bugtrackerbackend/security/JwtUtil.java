@@ -24,7 +24,7 @@ import java.util.function.Function;
 public class JwtUtil {
 
     private static final String SECRET = "3E12C8513B9264652530903475E07D64FD648CA115F70KC65F761FEA43718F811";
-    private static final long EXPIRATION_TIME = 900_000L; // 15 minutes;
+    private static final long EXPIRATION_TIME = 900_000_000L; // 15 minutes -> 900_000L
 
     public <T> T getClaimsFromToken(String token, Function<Claims, T> claimResolver) {
         final Claims claims = getAllClaimsFromToken(token);

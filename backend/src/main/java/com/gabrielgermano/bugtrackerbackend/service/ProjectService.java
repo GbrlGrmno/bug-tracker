@@ -1,13 +1,16 @@
 package com.gabrielgermano.bugtrackerbackend.service;
 
 import com.gabrielgermano.bugtrackerbackend.model.Project;
+import com.gabrielgermano.bugtrackerbackend.model.ProjectMember;
 import com.gabrielgermano.bugtrackerbackend.model.User;
 import com.gabrielgermano.bugtrackerbackend.repository.ProjectRepository;
+import com.gabrielgermano.bugtrackerbackend.request.AddMemberRequest;
 import com.gabrielgermano.bugtrackerbackend.request.ProjectRequest;
 import com.gabrielgermano.bugtrackerbackend.response.ProjectResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +26,7 @@ public class ProjectService {
     public ProjectResponse createProject(ProjectRequest projectRequest)  {
         Project project = projectRepository.save(modelMapper.map(projectRequest, Project.class));
         return modelMapper.map(project, ProjectResponse.class);
+
     }
 
     public Project getProjectById(Long id) {
@@ -37,12 +41,15 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    // TODO: assign a user to a project
-    public void addUserToProject(String username, Long projectId) {
-        User user = userService.findUserByUsername(username);
-        Project project = projectRepository.findById(projectId).orElseThrow();
-        project.getUsers().add(user);
+    public void addProjectMember(Long projectId, AddMemberRequest request) {
+        Project project = getProjectById(projectId);
+        User u = userService.findUserByEmail(request.getEmail());
+        project.addMember(u);
+        projectRepository.save(project);
     }
+
+
+
 
 
 }

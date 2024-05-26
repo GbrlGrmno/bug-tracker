@@ -43,6 +43,16 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<ProjectMember> projectMembers;
 
+    public void addMember(User user) {
+        ProjectMember projectMember = new ProjectMember();
+
+        projectMember.setProject(this);
+        projectMember.setUser(user);
+
+
+        projectMembers.add(projectMember);
+    }
+
 
 
 }
