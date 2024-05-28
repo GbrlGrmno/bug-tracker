@@ -52,7 +52,7 @@ public class Ticket {
     private List<Comment> comments;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Project project;
 
 

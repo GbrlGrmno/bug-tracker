@@ -4,9 +4,13 @@ import com.gabrielgermano.bugtrackerbackend.model.Project;
 import com.gabrielgermano.bugtrackerbackend.model.ProjectMember;
 import com.gabrielgermano.bugtrackerbackend.request.AddMemberRequest;
 import com.gabrielgermano.bugtrackerbackend.request.ProjectRequest;
+import com.gabrielgermano.bugtrackerbackend.request.TicketRequest;
 import com.gabrielgermano.bugtrackerbackend.response.ProjectResponse;
+import com.gabrielgermano.bugtrackerbackend.response.TicketResponse;
 import com.gabrielgermano.bugtrackerbackend.service.ProjectService;
+import com.gabrielgermano.bugtrackerbackend.service.TicketService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +23,7 @@ import java.util.Set;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final TicketService ticketService;
 
     @PostMapping
     public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest projectRequest) {
@@ -50,6 +55,16 @@ public class ProjectController {
     public ResponseEntity<Set<ProjectMember>> getAllMembers(@PathVariable("project_id") Long projectId) {
         return ResponseEntity.ok(projectService.getAllMembers(projectId));
     }
+
+    @GetMapping("/{projectId}/tickets")
+    public ResponseEntity<List<TicketResponse>> getAllTickets(@PathVariable("projectId") Long projectId) {
+        return ResponseEntity.ok(ticketService.getAllTicketsByProject(projectId));
+    }
+    @PostMapping("/{projectId}/tickets")
+    public ResponseEntity<TicketResponse> createTicket(@PathVariable("projectId") Long projectId, @RequestBody TicketRequest ticketRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED.value()).body(ticketService.createTicket(projectId,ticketRequest));
+    }
+
 
 
 
