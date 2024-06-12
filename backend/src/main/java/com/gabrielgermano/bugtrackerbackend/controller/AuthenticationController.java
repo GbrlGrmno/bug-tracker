@@ -1,8 +1,10 @@
 package com.gabrielgermano.bugtrackerbackend.controller;
 
 import com.gabrielgermano.bugtrackerbackend.model.User;
-import com.gabrielgermano.bugtrackerbackend.request.AuthenticationRequest;
-import com.gabrielgermano.bugtrackerbackend.response.AuthenticationResponse;
+import com.gabrielgermano.bugtrackerbackend.request.LoginRequest;
+import com.gabrielgermano.bugtrackerbackend.request.RegistrationRequest;
+import com.gabrielgermano.bugtrackerbackend.response.LoginResponse;
+import com.gabrielgermano.bugtrackerbackend.response.UserResponse;
 import com.gabrielgermano.bugtrackerbackend.security.JwtUtil;
 import com.gabrielgermano.bugtrackerbackend.security.impl.UserDetailsImpl;
 import com.gabrielgermano.bugtrackerbackend.service.AuthenticationService;
@@ -15,30 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/auth")
+@RequestMapping("auth")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final JwtUtil jwtUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody AuthenticationRequest request) {
-        User registeredUser = authenticationService.register(request);
+    public ResponseEntity<UserResponse> register(@RequestBody RegistrationRequest request) {
+        UserResponse registeredUser = authenticationService.register(request);
         return ResponseEntity.ok(registeredUser);
-
 
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest request) {
 
         User authenticatedUser = authenticationService.authenticate(request);
         String jwtToken = jwtUtil.generateToken(new UserDetailsImpl(authenticatedUser));
 
-        return ResponseEntity.ok(AuthenticationResponse
-                .builder()
-                .token(jwtToken)
-                .build());
+        return ResponseEntity.ok(
+                LoginResponse.builder()
+                        .token(jwtToken)
+                        .build()
+        );
 
     }
 

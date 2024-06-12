@@ -5,9 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
-@NoArgsConstructor @AllArgsConstructor
-public class AuthenticationResponse {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class LoginResponse {
     private String token;
 }

@@ -1,18 +1,17 @@
 package com.gabrielgermano.bugtrackerbackend.request;
 
-import com.gabrielgermano.bugtrackerbackend.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
-@NoArgsConstructor @AllArgsConstructor
-public class AuthenticationRequest {
+public class RegistrationRequest {
 
     private String username;
     private String password;
     private String email;
-
 }
