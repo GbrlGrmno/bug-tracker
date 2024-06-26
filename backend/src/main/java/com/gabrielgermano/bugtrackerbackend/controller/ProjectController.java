@@ -5,8 +5,7 @@ import com.gabrielgermano.bugtrackerbackend.model.ProjectMember;
 import com.gabrielgermano.bugtrackerbackend.request.AddMemberRequest;
 import com.gabrielgermano.bugtrackerbackend.request.ProjectRequest;
 import com.gabrielgermano.bugtrackerbackend.request.TicketRequest;
-import com.gabrielgermano.bugtrackerbackend.response.ProjectResponse;
-import com.gabrielgermano.bugtrackerbackend.response.TicketResponse;
+import com.gabrielgermano.bugtrackerbackend.response.*;
 import com.gabrielgermano.bugtrackerbackend.service.ProjectService;
 import com.gabrielgermano.bugtrackerbackend.service.TicketService;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +18,10 @@ import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final TicketService ticketService;
 
     @PostMapping
     public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest projectRequest) {
@@ -35,38 +33,31 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getAllProjects());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Project> getProjectById(@PathVariable("id") Long id) {
+    @GetMapping("{projectId}")
+    public ResponseEntity<ProjectResponse> getProjectById(@PathVariable("projectId") Long id) {
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
 
-    @DeleteMapping("{id}")
-    public void deleteProjectById(@PathVariable("id") Long id) {
+    @DeleteMapping("{projectId}")
+    public void deleteProjectById(@PathVariable("projectId") Long id) {
         projectService.deleteProject(id);
     }
 
-    @PostMapping("{project_id}/members")
-    public ResponseEntity<String> addProjectMember(@PathVariable("project_id") Long projectId, @RequestBody AddMemberRequest request) {
-        projectService.addProjectMember(projectId, request);
-        return ResponseEntity.ok("User added sucessfully");
+    @PostMapping("{projectId}/members")
+    public ResponseEntity<AddMemberResponse> addProjectMember(@PathVariable("projectId") Long projectId, @RequestBody AddMemberRequest request) {
+        return ResponseEntity.ok(projectService.addProjectMember(projectId, request));
     }
 
     @GetMapping("{project_id}/members")
-    public ResponseEntity<Set<ProjectMember>> getAllMembers(@PathVariable("project_id") Long projectId) {
+    public ResponseEntity<List<UserResponse>> getAllMembers(@PathVariable("project_id") Long projectId) {
         return ResponseEntity.ok(projectService.getAllMembers(projectId));
     }
 
-    @GetMapping("/{projectId}/tickets")
-    public ResponseEntity<List<TicketResponse>> getAllTickets(@PathVariable("projectId") Long projectId) {
-        return ResponseEntity.ok(ticketService.getAllTicketsByProject(projectId));
-    }
-    @PostMapping("/{projectId}/tickets")
-    public ResponseEntity<TicketResponse> createTicket(@PathVariable("projectId") Long projectId, @RequestBody TicketRequest ticketRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED.value()).body(ticketService.createTicket(projectId,ticketRequest));
-    }
-
-
-
+   @DeleteMapping("{projectId}/members/{userId}")
+   public ResponseEntity<?> removeUserFromProject(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId) {
+        projectService.removeUserFromProject(projectId, userId);
+        return ResponseEntity.ok().build();
+   }
 
 
 }

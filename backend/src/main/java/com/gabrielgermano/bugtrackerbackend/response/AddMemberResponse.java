@@ -1,4 +1,4 @@
-package com.gabrielgermano.bugtrackerbackend.request;
+package com.gabrielgermano.bugtrackerbackend.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddMemberRequest {
+public class AddMemberResponse {
 
+    private Long projectId;
     private Long userId;
-
+    private String message;
 }

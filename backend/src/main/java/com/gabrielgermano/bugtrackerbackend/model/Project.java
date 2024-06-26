@@ -42,22 +42,10 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private Set<ProjectMember> projectMembers;
-
-    public void addMember(User user) {
-        ProjectMember projectMember = new ProjectMember();
-
-        projectMember.setProject(this);
-        projectMember.setUser(user);
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectMember> projectMembers;
 
 
-        projectMembers.add(projectMember);
-    }
-
-    public void addTicket(Ticket ticket) {
-        tickets.add(ticket);
-    }
 
 
 
