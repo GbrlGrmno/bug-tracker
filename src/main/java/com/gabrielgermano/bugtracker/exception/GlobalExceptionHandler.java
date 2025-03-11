@@ -1,5 +1,6 @@
 package com.gabrielgermano.bugtracker.exception;
 
+import com.gabrielgermano.bugtracker.exception.project.ProjectNotFoundException;
 import com.gabrielgermano.bugtracker.exception.role.RoleNotFoundException;
 import com.gabrielgermano.bugtracker.exception.user.UserAlreadyExistsException;
 import com.gabrielgermano.bugtracker.exception.user.UserNotFoundException;
@@ -47,6 +48,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RoleNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleRoleNotFoundException(RoleNotFoundException ex,
                                                                      HttpServletRequest request) {
+        ErrorResponse response = new ErrorResponse(
+                OffsetDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<ErrorResponse>(response,
+                HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ProjectNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleProjectNotFoundException(ProjectNotFoundException ex,
+                                                                        HttpServletRequest request) {
         ErrorResponse response = new ErrorResponse(
                 OffsetDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
                 HttpStatus.NOT_FOUND.value(),
