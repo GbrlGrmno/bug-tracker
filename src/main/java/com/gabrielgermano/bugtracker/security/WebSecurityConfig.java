@@ -41,9 +41,8 @@ public class WebSecurityConfig {
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> //request.requestMatchers("auth/**").permitAll()
-                        //.anyRequest().authenticated()
-                        request.anyRequest().permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/api/v2/auth/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
