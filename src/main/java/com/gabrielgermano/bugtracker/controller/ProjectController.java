@@ -6,7 +6,6 @@ import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
 import com.gabrielgermano.bugtracker.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,6 @@ public class ProjectController {
     private final ProjectService projectService;
     private final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
-    @Autowired
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }

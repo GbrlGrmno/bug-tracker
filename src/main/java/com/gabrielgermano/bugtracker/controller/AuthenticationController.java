@@ -7,7 +7,6 @@ import com.gabrielgermano.bugtracker.payload.response.TokenResponse;
 import com.gabrielgermano.bugtracker.security.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +21,6 @@ public class AuthenticationController {
 
     private final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
-    @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
