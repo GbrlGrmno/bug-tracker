@@ -42,6 +42,9 @@ public class ProjectMemberService {
         
     }
 
-    
-    
+    public List<UserResponse> getAllUsersFromProject(Long projectId) {
+
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+        return Arrays.asList(modelMapper.map(project.getUsers(), UserResponse[].class));
+    }
 }
