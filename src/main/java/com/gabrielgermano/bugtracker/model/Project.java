@@ -38,6 +38,10 @@ public class Project {
         users.add(user);
     }
 
+    public void removeUser(User user) {
+        users.remove(user);
+    }
+
     public Set<User> getUsers() {
         return users;
     }

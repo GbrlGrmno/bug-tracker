@@ -54,4 +54,13 @@ public class ProjectMemberService {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         return Arrays.asList(modelMapper.map(user.getProjects(), ProjectResponse[].class));
     }
+
+    public void deleteUserFromProject(Long projectId, Long userId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+        project.removeUser(user);
+
+        projectRepository.save(project);
+    }
 }

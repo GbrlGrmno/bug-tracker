@@ -36,5 +36,11 @@ public class ProjectMemberController {
     public ResponseEntity<List<ProjectResponse>> getAllProjectsFromUser(@RequestParam("userId") Long userId) {
         return ResponseEntity.ok(projectMemberService.getAllProjectFromUser(userId));
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUserFromProject(@RequestBody ProjectMemberRequest request) {
+        projectMemberService.deleteUserFromProject(request.getProjectId(), request.getUserId());
+        return ResponseEntity.noContent().build();
+    }
     
 }
