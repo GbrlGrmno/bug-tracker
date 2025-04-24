@@ -42,6 +42,10 @@ public class User {
 
     public User() {}
 
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
     public Long getId() {
         return id;
     }

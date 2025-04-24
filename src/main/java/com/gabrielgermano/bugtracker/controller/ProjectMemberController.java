@@ -1,5 +1,6 @@
 package com.gabrielgermano.bugtracker.controller;
 
+import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
 import org.springframework.web.bind.annotation.*;
 
 import com.gabrielgermano.bugtracker.payload.request.ProjectMemberRequest;
@@ -26,9 +27,14 @@ public class ProjectMemberController {
         return ResponseEntity.ok(projectMemberService.addUserToProject(request.getProjectId(), request.getUserId()));
     }
 
-    @GetMapping
+    @GetMapping(params = "projectId")
     public ResponseEntity<List<UserResponse>> getAllUsersFromProject(@RequestParam("projectId") Long projectId) {
         return ResponseEntity.ok(projectMemberService.getAllUsersFromProject(projectId));
+    }
+
+    @GetMapping(params = "userId")
+    public ResponseEntity<List<ProjectResponse>> getAllProjectsFromUser(@RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(projectMemberService.getAllProjectFromUser(userId));
     }
     
 }

@@ -2,6 +2,7 @@ package com.gabrielgermano.bugtracker.service;
 
 import java.util.List;
 
+import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,11 @@ public class ProjectMemberService {
 
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
         return Arrays.asList(modelMapper.map(project.getUsers(), UserResponse[].class));
+    }
+
+    public List<ProjectResponse> getAllProjectFromUser(Long userId) {
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        return Arrays.asList(modelMapper.map(user.getProjects(), ProjectResponse[].class));
     }
 }
