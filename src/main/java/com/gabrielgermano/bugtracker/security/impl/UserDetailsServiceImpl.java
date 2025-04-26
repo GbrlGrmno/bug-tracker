@@ -1,4 +1,4 @@
-package com.gabrielgermano.bugtracker.security.service;
+package com.gabrielgermano.bugtracker.security.impl;
 
 import com.gabrielgermano.bugtracker.model.User;
 import com.gabrielgermano.bugtracker.repository.UserRepository;

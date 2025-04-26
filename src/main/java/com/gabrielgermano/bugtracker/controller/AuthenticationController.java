@@ -4,7 +4,7 @@ import com.gabrielgermano.bugtracker.payload.request.LoginRequest;
 import com.gabrielgermano.bugtracker.payload.request.RegisterRequest;
 import com.gabrielgermano.bugtracker.payload.response.MessageResponse;
 import com.gabrielgermano.bugtracker.payload.response.TokenResponse;
-import com.gabrielgermano.bugtracker.security.service.AuthenticationService;
+import com.gabrielgermano.bugtracker.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
