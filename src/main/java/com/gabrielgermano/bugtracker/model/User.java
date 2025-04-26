@@ -3,6 +3,7 @@ package com.gabrielgermano.bugtracker.model;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,9 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany(mappedBy = "users")
+    private Set<Project> projects = new HashSet<>();
+
 
     public User(String username, String email, String password, Set<Role> roles) {
         this.username = username;
@@ -37,6 +41,10 @@ public class User {
     }
 
     public User() {}
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
 
     public Long getId() {
         return id;
@@ -76,5 +84,17 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(email);
     }
 }

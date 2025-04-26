@@ -3,7 +3,6 @@ package com.gabrielgermano.bugtracker.security;
 import com.gabrielgermano.bugtracker.security.jwt.JwtAuthenticationEntryPoint;
 import com.gabrielgermano.bugtracker.security.jwt.JwtAuthenticationFilter;
 import com.gabrielgermano.bugtracker.security.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +26,7 @@ public class WebSecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
+    
     public WebSecurityConfig(UserDetailsServiceImpl userDetailsService,
                              JwtAuthenticationFilter jwtAuthenticationFilter,
                              JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
@@ -41,9 +40,8 @@ public class WebSecurityConfig {
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> //request.requestMatchers("auth/**").permitAll()
-                        //.anyRequest().authenticated()
-                        request.anyRequest().permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/api/v2/auth/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
