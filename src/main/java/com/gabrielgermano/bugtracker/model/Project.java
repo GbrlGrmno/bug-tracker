@@ -26,6 +26,9 @@ public class Project {
     )
     private Set<User> users = new HashSet<>();
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ticket> tickets = new HashSet<>();
+
     public Project(String name, String description) {
         this.name = name;
         this.description = description;
@@ -40,6 +43,14 @@ public class Project {
 
     public void removeUser(User user) {
         users.remove(user);
+    }
+
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
+    }
+
+    public void removeTicket(Ticket ticket) {
+        tickets.remove(ticket);
     }
 
     public Set<User> getUsers() {
@@ -85,5 +96,13 @@ public class Project {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

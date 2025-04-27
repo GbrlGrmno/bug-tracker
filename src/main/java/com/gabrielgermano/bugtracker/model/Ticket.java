@@ -24,6 +24,9 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private TicketPriority priority;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Project project;
+
     public Ticket(String title, String description, TicketStatus status, TicketType type, TicketPriority priority) {
         this.title = title;
         this.description = description;
@@ -92,6 +95,14 @@ public class Ticket {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
 
