@@ -22,6 +22,10 @@ public class TicketResponse {
         this.type = type;
     }
 
+    public TicketResponse() {
+
+    }
+
     public Long getId() {
         return id;
     }
