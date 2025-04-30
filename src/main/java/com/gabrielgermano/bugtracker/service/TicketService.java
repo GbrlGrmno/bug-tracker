@@ -10,6 +10,9 @@ import com.gabrielgermano.bugtracker.repository.TicketRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 @Service
 public class TicketService {
@@ -36,5 +39,11 @@ public class TicketService {
 
        return modelMapper.map(savedTicket, TicketResponse.class);
 
+    }
+
+    public List<TicketResponse> getAllTicketsFromProject(Long projectId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+
+        return Arrays.asList(modelMapper.map(project.getTickets(), TicketResponse[].class));
     }
 }
