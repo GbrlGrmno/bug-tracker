@@ -1,6 +1,7 @@
 package com.gabrielgermano.bugtracker.service;
 
 import com.gabrielgermano.bugtracker.exception.project.ProjectNotFoundException;
+import com.gabrielgermano.bugtracker.exception.ticket.TicketNotFoundException;
 import com.gabrielgermano.bugtracker.model.Project;
 import com.gabrielgermano.bugtracker.model.Ticket;
 import com.gabrielgermano.bugtracker.payload.request.TicketRequest;
@@ -52,6 +53,14 @@ public class TicketService {
     }
 
     public TicketResponse getTicketById(Long id) {
-        return  modelMapper.map(ticketRepository.findById(id), TicketResponse.class);
+        return modelMapper.map(ticketRepository.findById(id), TicketResponse.class);
+    }
+
+    public void deleteTicket(Long id) {
+        if (!ticketRepository.existsById(id)) {
+            throw new TicketNotFoundException(id);
+        }
+
+        ticketRepository.deleteById(id);
     }
 }
