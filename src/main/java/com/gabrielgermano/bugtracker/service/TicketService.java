@@ -46,4 +46,8 @@ public class TicketService {
 
         return Arrays.asList(modelMapper.map(project.getTickets(), TicketResponse[].class));
     }
+
+    public List<TicketResponse> getAllTickets() {
+        return Arrays.asList(modelMapper.map(ticketRepository.findAll(), TicketResponse[].class));
+    }
 }
