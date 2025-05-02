@@ -10,6 +10,7 @@ import com.gabrielgermano.bugtracker.repository.ProjectRepository;
 import com.gabrielgermano.bugtracker.repository.TicketRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +54,8 @@ public class TicketService {
     }
 
     public TicketResponse getTicketById(Long id) {
-        return modelMapper.map(ticketRepository.findById(id), TicketResponse.class);
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new TicketNotFoundException(id));
+        return modelMapper.map(ticket, TicketResponse.class);
     }
 
     public void deleteTicket(Long id) {
