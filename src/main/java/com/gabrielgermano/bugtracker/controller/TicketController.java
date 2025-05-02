@@ -46,6 +46,11 @@ public class TicketController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/tickets/{id}")
+    public ResponseEntity<TicketResponse> patchTicket(@PathVariable("id") Long ticketId, @RequestBody TicketRequest ticketRequest) {
+        return ResponseEntity.ok(ticketService.patchTicket(ticketId, ticketRequest));
+    }
+
 
 
 

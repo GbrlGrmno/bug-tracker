@@ -65,4 +65,32 @@ public class TicketService {
 
         ticketRepository.deleteById(id);
     }
+
+    public TicketResponse patchTicket(Long ticketId, TicketRequest ticketRequest) {
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
+
+        if (ticketRequest.getTitle() != null) {
+            ticket.setTitle(ticketRequest.getTitle());
+        }
+
+        if (ticketRequest.getDescription() != null) {
+            ticket.setDescription(ticketRequest.getDescription());
+        }
+
+        if (ticketRequest.getPriority() != null) {
+            ticket.setPriority(ticketRequest.getPriority());
+        }
+
+        if (ticketRequest.getType() != null) {
+            ticket.setType(ticketRequest.getType());
+        }
+
+        if (ticketRequest.getStatus() != null) {
+            ticket.setStatus(ticketRequest.getStatus());
+        }
+
+        ticketRepository.save(ticket);
+
+        return modelMapper.map(ticket, TicketResponse.class);
+    }
 }
