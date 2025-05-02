@@ -50,4 +50,8 @@ public class TicketService {
     public List<TicketResponse> getAllTickets() {
         return Arrays.asList(modelMapper.map(ticketRepository.findAll(), TicketResponse[].class));
     }
+
+    public TicketResponse getTicketById(Long id) {
+        return  modelMapper.map(ticketRepository.findById(id), TicketResponse.class);
+    }
 }

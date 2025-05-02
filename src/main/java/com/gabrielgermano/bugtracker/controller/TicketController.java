@@ -29,11 +29,18 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getAllTickets());
     }
 
+    @GetMapping("/tickets/{id}")
+    public ResponseEntity<TicketResponse> getTicketById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(ticketService.getTicketById(id));
+    }
+
     @PostMapping("/projects/{project_id}/tickets")
     public ResponseEntity<TicketResponse> createTicket(@PathVariable("project_id") Long projectId,
                                                        @RequestBody TicketRequest ticketRequest) {
         return ResponseEntity.ok(ticketService.createTicket(projectId, ticketRequest));
     }
+
+
 
 
 
