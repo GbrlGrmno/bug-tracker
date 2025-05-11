@@ -1,4 +1,4 @@
-package com.gabrielgermano.bugtracker.security.service;
+package com.gabrielgermano.bugtracker.service;
 
 import com.gabrielgermano.bugtracker.exception.user.UserAlreadyExistsException;
 import com.gabrielgermano.bugtracker.exception.user.UserNotFoundException;
@@ -9,6 +9,7 @@ import com.gabrielgermano.bugtracker.payload.request.RegisterRequest;
 import com.gabrielgermano.bugtracker.payload.response.TokenResponse;
 import com.gabrielgermano.bugtracker.repository.RoleRepository;
 import com.gabrielgermano.bugtracker.repository.UserRepository;
+import com.gabrielgermano.bugtracker.security.impl.UserDetailsImpl;
 import com.gabrielgermano.bugtracker.security.jwt.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

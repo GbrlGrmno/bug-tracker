@@ -2,7 +2,7 @@ package com.gabrielgermano.bugtracker.security;
 
 import com.gabrielgermano.bugtracker.security.jwt.JwtAuthenticationEntryPoint;
 import com.gabrielgermano.bugtracker.security.jwt.JwtAuthenticationFilter;
-import com.gabrielgermano.bugtracker.security.service.UserDetailsServiceImpl;
+import com.gabrielgermano.bugtracker.security.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
