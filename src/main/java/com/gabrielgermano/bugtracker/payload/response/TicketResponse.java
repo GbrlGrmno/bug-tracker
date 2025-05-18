@@ -4,6 +4,8 @@ import com.gabrielgermano.bugtracker.model.TicketPriority;
 import com.gabrielgermano.bugtracker.model.TicketStatus;
 import com.gabrielgermano.bugtracker.model.TicketType;
 
+import java.time.LocalDateTime;
+
 public class TicketResponse {
 
     private Long id;
@@ -13,13 +15,22 @@ public class TicketResponse {
     private TicketPriority priority;
     private TicketType type;
 
-    public TicketResponse(Long id, String title, TicketStatus status, String description, TicketPriority priority, TicketType type) {
+    private String createdBy;
+    private LocalDateTime createdDate;
+    private String lastModifiedBy;
+    private LocalDateTime lastModifiedDate;
+
+    public TicketResponse(Long id, String title, TicketStatus status, String description, TicketPriority priority, TicketType type, String createdBy, LocalDateTime createdDate, String lastModifiedBy, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.title = title;
         this.status = status;
         this.description = description;
         this.priority = priority;
         this.type = type;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public TicketResponse() {
@@ -73,4 +84,37 @@ public class TicketResponse {
     public void setType(TicketType type) {
         this.type = type;
     }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
 }
