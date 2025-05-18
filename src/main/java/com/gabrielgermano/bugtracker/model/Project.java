@@ -1,5 +1,6 @@
 package com.gabrielgermano.bugtracker.model;
 
+import com.gabrielgermano.bugtracker.audit.Auditable;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -8,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "projects")
-public class Project {
+public class Project extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
