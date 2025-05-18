@@ -1,12 +1,13 @@
 package com.gabrielgermano.bugtracker.model;
 
+import com.gabrielgermano.bugtracker.audit.Auditable;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "tickets")
-public class Ticket {
+public class Ticket extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
