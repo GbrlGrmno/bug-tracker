@@ -9,11 +9,17 @@ import com.gabrielgermano.bugtracker.payload.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -87,5 +93,14 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<ErrorResponse>(response,
                 HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, List<String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getFieldErrors().stream().map(x -> x.getField() + ": " + x.getDefaultMessage()).toList();
+
+        Map<String, List<String>> errorsResponse = new HashMap<>();
+        errorsResponse.put("errors", errors);
+        return new ResponseEntity<>(errorsResponse, HttpStatus.BAD_REQUEST);
     }
 }

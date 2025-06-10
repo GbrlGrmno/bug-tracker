@@ -1,9 +1,14 @@
 package com.gabrielgermano.bugtracker.payload.request;
 
+import jakarta.validation.constraints.NotNull;
+
 public class ProjectMemberRequest {
     
 
+    @NotNull(message = "Project ID cannot be null")
     private Long projectId;
+
+    @NotNull(message = "User ID cannot be null")
     private Long userId;
 
     public ProjectMemberRequest(Long projectId, Long userId) {

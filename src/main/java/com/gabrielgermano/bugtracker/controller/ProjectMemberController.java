@@ -1,6 +1,7 @@
 package com.gabrielgermano.bugtracker.controller;
 
 import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import com.gabrielgermano.bugtracker.payload.request.ProjectMemberRequest;
@@ -23,7 +24,7 @@ public class ProjectMemberController {
     }
 
     @PostMapping
-    public ResponseEntity<List<UserResponse>> addUserToProject(@RequestBody ProjectMemberRequest request) {
+    public ResponseEntity<List<UserResponse>> addUserToProject(@RequestBody @Valid ProjectMemberRequest request) {
         return ResponseEntity.ok(projectMemberService.addUserToProject(request.getProjectId(), request.getUserId()));
     }
 
@@ -38,7 +39,7 @@ public class ProjectMemberController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteUserFromProject(@RequestBody ProjectMemberRequest request) {
+    public ResponseEntity<Void> deleteUserFromProject(@RequestBody @Valid ProjectMemberRequest request) {
         projectMemberService.deleteUserFromProject(request.getProjectId(), request.getUserId());
         return ResponseEntity.noContent().build();
     }

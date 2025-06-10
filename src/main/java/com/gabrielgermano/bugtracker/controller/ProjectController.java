@@ -4,6 +4,7 @@ import com.gabrielgermano.bugtracker.payload.request.ProjectRequest;
 import com.gabrielgermano.bugtracker.payload.response.MessageResponse;
 import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
 import com.gabrielgermano.bugtracker.service.ProjectService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest projectRequest) {
+    public ResponseEntity<ProjectResponse> createProject(@RequestBody @Valid ProjectRequest projectRequest) {
         logger.info("Entering createProject method inside the controller layer");
         return ResponseEntity.ok(projectService.createProject(projectRequest));
     }
@@ -41,7 +42,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectResponse> updateProject(@PathVariable Long id, @RequestBody ProjectRequest projectRequest) {
+    public ResponseEntity<ProjectResponse> updateProject(@PathVariable Long id, @RequestBody @Valid ProjectRequest projectRequest) {
         logger.info("Entering updateProject method inside the controller layer");
         return ResponseEntity.ok(projectService.updateProjectById(id, projectRequest));
 
