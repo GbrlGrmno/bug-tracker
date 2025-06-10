@@ -1,8 +1,14 @@
 package com.gabrielgermano.bugtracker.payload.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class LoginRequest {
 
+    @NotBlank(message = "Username cannot be empty")
     private String username;
+
+    @NotBlank(message = "Password is required for login")
     private String password;
 
     public LoginRequest(String username, String password) {

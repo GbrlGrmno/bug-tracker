@@ -3,6 +3,7 @@ package com.gabrielgermano.bugtracker.controller;
 import com.gabrielgermano.bugtracker.payload.request.TicketRequest;
 import com.gabrielgermano.bugtracker.payload.response.TicketResponse;
 import com.gabrielgermano.bugtracker.service.TicketService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class TicketController {
 
     @PostMapping("/projects/{project_id}/tickets")
     public ResponseEntity<TicketResponse> createTicket(@PathVariable("project_id") Long projectId,
-                                                       @RequestBody TicketRequest ticketRequest) {
+                                                       @RequestBody @Valid TicketRequest ticketRequest) {
         return ResponseEntity.ok(ticketService.createTicket(projectId, ticketRequest));
     }
 
@@ -47,7 +48,7 @@ public class TicketController {
     }
 
     @PatchMapping("/tickets/{id}")
-    public ResponseEntity<TicketResponse> patchTicket(@PathVariable("id") Long ticketId, @RequestBody TicketRequest ticketRequest) {
+    public ResponseEntity<TicketResponse> patchTicket(@PathVariable("id") Long ticketId, @RequestBody @Valid TicketRequest ticketRequest) {
         return ResponseEntity.ok(ticketService.patchTicket(ticketId, ticketRequest));
     }
 

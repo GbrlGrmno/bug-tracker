@@ -5,6 +5,7 @@ import com.gabrielgermano.bugtracker.payload.request.RegisterRequest;
 import com.gabrielgermano.bugtracker.payload.response.MessageResponse;
 import com.gabrielgermano.bugtracker.payload.response.TokenResponse;
 import com.gabrielgermano.bugtracker.service.AuthenticationService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         logger.info("Entering the login controller.");
         return ResponseEntity.ok(
                 authenticationService.authenticateUser(loginRequest)
@@ -34,7 +35,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
         logger.info("Entering the register controller.");
         authenticationService.registerUser(registerRequest);
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));
