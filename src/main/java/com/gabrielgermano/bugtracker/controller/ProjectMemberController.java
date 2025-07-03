@@ -25,7 +25,7 @@ public class ProjectMemberController {
 
     @PostMapping
     public ResponseEntity<List<UserResponse>> addUserToProject(@RequestBody @Valid ProjectMemberRequest request) {
-        return ResponseEntity.ok(projectMemberService.addUserToProject(request.getProjectId(), request.getUserId()));
+        return ResponseEntity.ok(projectMemberService.addUserToProject(request.projectId(), request.userId()));
     }
 
     @GetMapping(params = "projectId")
@@ -40,7 +40,7 @@ public class ProjectMemberController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteUserFromProject(@RequestBody @Valid ProjectMemberRequest request) {
-        projectMemberService.deleteUserFromProject(request.getProjectId(), request.getUserId());
+        projectMemberService.deleteUserFromProject(request.projectId(), request.userId());
         return ResponseEntity.noContent().build();
     }
     

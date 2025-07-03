@@ -10,7 +10,6 @@ import com.gabrielgermano.bugtracker.repository.ProjectRepository;
 import com.gabrielgermano.bugtracker.repository.TicketRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.Arrays;
 import java.util.List;
@@ -69,24 +68,24 @@ public class TicketService {
     public TicketResponse patchTicket(Long ticketId, TicketRequest ticketRequest) {
         Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new TicketNotFoundException(ticketId));
 
-        if (ticketRequest.getTitle() != null) {
-            ticket.setTitle(ticketRequest.getTitle());
+        if (ticketRequest.title() != null) {
+            ticket.setTitle(ticketRequest.title());
         }
 
-        if (ticketRequest.getDescription() != null) {
-            ticket.setDescription(ticketRequest.getDescription());
+        if (ticketRequest.description() != null) {
+            ticket.setDescription(ticketRequest.description());
         }
 
-        if (ticketRequest.getPriority() != null) {
-            ticket.setPriority(ticketRequest.getPriority());
+        if (ticketRequest.priority() != null) {
+            ticket.setPriority(ticketRequest.priority());
         }
 
-        if (ticketRequest.getType() != null) {
-            ticket.setType(ticketRequest.getType());
+        if (ticketRequest.type() != null) {
+            ticket.setType(ticketRequest.type());
         }
 
-        if (ticketRequest.getStatus() != null) {
-            ticket.setStatus(ticketRequest.getStatus());
+        if (ticketRequest.status() != null) {
+            ticket.setStatus(ticketRequest.status());
         }
 
         ticketRepository.save(ticket);

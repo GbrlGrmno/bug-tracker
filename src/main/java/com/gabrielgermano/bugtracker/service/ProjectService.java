@@ -48,8 +48,8 @@ public class ProjectService {
     public ProjectResponse updateProjectById(Long id, ProjectRequest projectRequest) {
         logger.info("Entering updateProjectById method inside the service layer");
         Project project = projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
-        project.setDescription(projectRequest.getDescription());
-        project.setName(projectRequest.getName());
+        project.setDescription(projectRequest.description());
+        project.setName(projectRequest.name());
         logger.info("Project successfully updated");
         return modelMapper.map(projectRepository.save(project), ProjectResponse.class);
     }

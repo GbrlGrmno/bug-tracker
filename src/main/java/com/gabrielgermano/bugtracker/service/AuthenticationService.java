@@ -49,13 +49,13 @@ public class AuthenticationService {
         logger.info("Entering the authenticateUser method");
 
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password())
         );
 
-        logger.info("User {} authenticated successfully", loginRequest.getUsername());
+        logger.info("User {} authenticated successfully", loginRequest.username());
 
-        User authenticatedUser = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() ->
-                new UserNotFoundException(loginRequest.getUsername()));
+        User authenticatedUser = userRepository.findByUsername(loginRequest.username()).orElseThrow(() ->
+                new UserNotFoundException(loginRequest.username()));
 
         logger.info("User {} found inside the repository", authenticatedUser.getUsername());
 
@@ -72,24 +72,24 @@ public class AuthenticationService {
 
         logger.info("Entering the registerUser method");
 
-        if (userRepository.existsByUsername(registerRequest.getUsername())) {
-            logger.error("User with username {} already exists", registerRequest.getUsername());
-            throw new UserAlreadyExistsException("Username " + registerRequest.getUsername() + " is already taken");
+        if (userRepository.existsByUsername(registerRequest.username())) {
+            logger.error("User with username {} already exists", registerRequest.username());
+            throw new UserAlreadyExistsException("Username " + registerRequest.username() + " is already taken");
         }
-        if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            logger.error("User with email {} already exists", registerRequest.getEmail());
-            throw new UserAlreadyExistsException("Email " + registerRequest.getEmail() + " is already registered");
+        if (userRepository.existsByEmail(registerRequest.email())) {
+            logger.error("User with email {} already exists", registerRequest.email());
+            throw new UserAlreadyExistsException("Email " + registerRequest.email() + " is already registered");
         }
 
-        Set<Role> roles = registerRequest.getRoles().stream()
+        Set<Role> roles = registerRequest.roles().stream()
                 .map(role -> roleRepository.findByName(role)
                         .orElseThrow(() -> new RuntimeException("Role not found: " + role)))
                 .collect(Collectors.toSet());
 
 
-        User newUser = new User(registerRequest.getUsername(),
-                registerRequest.getEmail(),
-                passwordEncoder.encode(registerRequest.getPassword()),
+        User newUser = new User(registerRequest.username(),
+                registerRequest.email(),
+                passwordEncoder.encode(registerRequest.password()),
                 roles);
 
         userRepository.save(newUser);
