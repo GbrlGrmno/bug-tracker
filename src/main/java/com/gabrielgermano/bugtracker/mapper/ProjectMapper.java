@@ -6,6 +6,7 @@ import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Collection;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -13,7 +14,7 @@ public interface ProjectMapper {
     ProjectMapper INSTANCE = Mappers.getMapper(ProjectMapper.class);
     Project mapToProject(ProjectRequest projectRequest);
     ProjectResponse mapToProjectResponse(Project project);
-    List<ProjectResponse> mapToProjectResponseList(List<Project> projects);
+    List<ProjectResponse> mapToProjectResponseList(Collection<Project> projects);
 
 
 }
