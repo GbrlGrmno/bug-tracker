@@ -2,6 +2,7 @@ package com.gabrielgermano.bugtracker.service;
 
 import com.gabrielgermano.bugtracker.exception.project.ProjectNotFoundException;
 import com.gabrielgermano.bugtracker.exception.ticket.TicketNotFoundException;
+import com.gabrielgermano.bugtracker.mapper.TicketMapper;
 import com.gabrielgermano.bugtracker.model.Project;
 import com.gabrielgermano.bugtracker.model.Ticket;
 import com.gabrielgermano.bugtracker.payload.request.TicketRequest;
@@ -12,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -20,41 +22,40 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
     private final ProjectRepository projectRepository;
-    private final ModelMapper modelMapper;
+    private final TicketMapper ticketMapper;
 
-    public TicketService(TicketRepository ticketRepository, ProjectRepository projectRepository, ModelMapper modelMapper) {
+    public TicketService(TicketRepository ticketRepository, ProjectRepository projectRepository, TicketMapper ticketMapper) {
         this.ticketRepository = ticketRepository;
         this.projectRepository = projectRepository;
-        this.modelMapper = modelMapper;
+        this.ticketMapper = ticketMapper;
     }
 
 
     public TicketResponse createTicket(Long projectId, TicketRequest ticketRequest) {
 
-       Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
-       Ticket ticket = modelMapper.map(ticketRequest, Ticket.class);
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+        Ticket ticket = ticketMapper.mapToTicket(ticketRequest);
 
-       ticket.setProject(project);
+        ticket.setProject(project);
 
-       Ticket savedTicket = ticketRepository.save(ticket);
+        Ticket savedTicket = ticketRepository.save(ticket);
 
-       return modelMapper.map(savedTicket, TicketResponse.class);
-
+        return ticketMapper.mapToTicketResponse(savedTicket);
     }
 
     public List<TicketResponse> getAllTicketsFromProject(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
-
-        return Arrays.asList(modelMapper.map(project.getTickets(), TicketResponse[].class));
+        Collection<Ticket> tickets = project.getTickets();
+        return ticketMapper.mapToTicketResponseList(tickets);
     }
 
     public List<TicketResponse> getAllTickets() {
-        return Arrays.asList(modelMapper.map(ticketRepository.findAll(), TicketResponse[].class));
+        return ticketMapper.mapToTicketResponseList(ticketRepository.findAll());
     }
 
     public TicketResponse getTicketById(Long id) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new TicketNotFoundException(id));
-        return modelMapper.map(ticket, TicketResponse.class);
+        return ticketMapper.mapToTicketResponse(ticket);
     }
 
     public void deleteTicket(Long id) {
@@ -90,6 +91,6 @@ public class TicketService {
 
         ticketRepository.save(ticket);
 
-        return modelMapper.map(ticket, TicketResponse.class);
+        return ticketMapper.mapToTicketResponse(ticket);
     }
 }
