@@ -2,8 +2,9 @@ package com.gabrielgermano.bugtracker.service;
 
 import java.util.List;
 
+import com.gabrielgermano.bugtracker.mapper.ProjectMapper;
+import com.gabrielgermano.bugtracker.mapper.UserMapper;
 import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.gabrielgermano.bugtracker.exception.project.ProjectNotFoundException;
@@ -21,12 +22,14 @@ public class ProjectMemberService {
 
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
-    private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
+    private final ProjectMapper projectMapper;
 
-    public ProjectMemberService(UserRepository userRepository, ProjectRepository projectRepository, ModelMapper modelMapper) {
+    public ProjectMemberService(UserRepository userRepository, ProjectRepository projectRepository, UserMapper userMapper, ProjectMapper projectMapper) {
         this.userRepository = userRepository;
         this.projectRepository = projectRepository;
-        this.modelMapper = modelMapper;
+        this.userMapper = userMapper;
+        this.projectMapper = projectMapper;
     }
 
     public List<UserResponse> addUserToProject(Long projectId, Long userId) {
@@ -38,7 +41,7 @@ public class ProjectMemberService {
 
         projectRepository.save(project);
 
-        return Arrays.asList(modelMapper.map(project.getUsers(), UserResponse[].class));
+        return userMapper.mapToUserResponseList(project.getUsers());
 
         
     }
@@ -46,13 +49,13 @@ public class ProjectMemberService {
     public List<UserResponse> getAllUsersFromProject(Long projectId) {
 
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
-        return Arrays.asList(modelMapper.map(project.getUsers(), UserResponse[].class));
+        return userMapper.mapToUserResponseList(project.getUsers());
     }
 
     public List<ProjectResponse> getAllProjectFromUser(Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-        return Arrays.asList(modelMapper.map(user.getProjects(), ProjectResponse[].class));
+        return projectMapper.mapToProjectResponseList(user.getProjects());
     }
 
     public void deleteUserFromProject(Long projectId, Long userId) {

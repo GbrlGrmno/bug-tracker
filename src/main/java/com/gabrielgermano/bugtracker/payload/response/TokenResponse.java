@@ -1,18 +1,5 @@
 package com.gabrielgermano.bugtracker.payload.response;
 
-public class TokenResponse {
+public record TokenResponse(String token) {
 
-    private String token;
-
-    public TokenResponse(String token) {
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

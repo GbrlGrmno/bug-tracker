@@ -1,12 +1,12 @@
 package com.gabrielgermano.bugtracker.service;
 
 import com.gabrielgermano.bugtracker.exception.project.ProjectNotFoundException;
+import com.gabrielgermano.bugtracker.mapper.ProjectMapper;
 import com.gabrielgermano.bugtracker.model.Project;
 import com.gabrielgermano.bugtracker.payload.request.ProjectRequest;
 import com.gabrielgermano.bugtracker.payload.response.MessageResponse;
 import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
 import com.gabrielgermano.bugtracker.repository.ProjectRepository;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,40 +18,40 @@ import java.util.List;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final ModelMapper modelMapper;
+    private final ProjectMapper projectMapper;
     private final Logger logger = LoggerFactory.getLogger(ProjectService.class);
 
 
-    public ProjectService(ProjectRepository projectRepository, ModelMapper modelMapper) {
+    public ProjectService(ProjectRepository projectRepository, ProjectMapper projectMapper) {
         this.projectRepository = projectRepository;
-        this.modelMapper = modelMapper;
+        this.projectMapper = projectMapper;
     }
 
     public ProjectResponse createProject(ProjectRequest projectRequest) {
         logger.info("Entering createProject method inside the service layer");
-        Project savedProject = projectRepository.save(modelMapper.map(projectRequest, Project.class));
+        Project savedProject = projectRepository.save(projectMapper.mapToProject(projectRequest));
         logger.info("Project created successfully");
-        return modelMapper.map(savedProject, ProjectResponse.class);
+        return projectMapper.mapToProjectResponse(savedProject);
     }
 
     public List<ProjectResponse> getAllProjects() {
         logger.info("Entering getAllProjects method inside the service layer");
-        return Arrays.asList(modelMapper.map(projectRepository.findAll(), ProjectResponse[].class));
+        return projectMapper.mapToProjectResponseList(projectRepository.findAll());
     }
 
     public ProjectResponse getProjectById(Long id) {
         Project project = projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
         logger.info("Project successfully found");
-        return modelMapper.map(project, ProjectResponse.class);
+        return projectMapper.mapToProjectResponse(project);
     }
 
     public ProjectResponse updateProjectById(Long id, ProjectRequest projectRequest) {
         logger.info("Entering updateProjectById method inside the service layer");
         Project project = projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
-        project.setDescription(projectRequest.getDescription());
-        project.setName(projectRequest.getName());
+        project.setDescription(projectRequest.description());
+        project.setName(projectRequest.name());
         logger.info("Project successfully updated");
-        return modelMapper.map(projectRepository.save(project), ProjectResponse.class);
+        return projectMapper.mapToProjectResponse(projectRepository.save(project));
     }
 
     public MessageResponse deleteProjectById(Long id) {
