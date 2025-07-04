@@ -9,7 +9,6 @@ import com.gabrielgermano.bugtracker.payload.request.TicketRequest;
 import com.gabrielgermano.bugtracker.payload.response.TicketResponse;
 import com.gabrielgermano.bugtracker.repository.ProjectRepository;
 import com.gabrielgermano.bugtracker.repository.TicketRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;

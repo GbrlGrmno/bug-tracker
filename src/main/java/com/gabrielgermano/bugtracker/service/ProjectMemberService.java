@@ -5,7 +5,6 @@ import java.util.List;
 import com.gabrielgermano.bugtracker.mapper.ProjectMapper;
 import com.gabrielgermano.bugtracker.mapper.UserMapper;
 import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.gabrielgermano.bugtracker.exception.project.ProjectNotFoundException;

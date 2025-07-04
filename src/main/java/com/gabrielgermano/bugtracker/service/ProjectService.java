@@ -7,7 +7,6 @@ import com.gabrielgermano.bugtracker.payload.request.ProjectRequest;
 import com.gabrielgermano.bugtracker.payload.response.MessageResponse;
 import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
 import com.gabrielgermano.bugtracker.repository.ProjectRepository;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
