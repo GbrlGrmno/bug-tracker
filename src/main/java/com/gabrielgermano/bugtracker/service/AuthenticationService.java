@@ -2,11 +2,13 @@ package com.gabrielgermano.bugtracker.service;
 
 import com.gabrielgermano.bugtracker.exception.user.UserAlreadyExistsException;
 import com.gabrielgermano.bugtracker.exception.user.UserNotFoundException;
+import com.gabrielgermano.bugtracker.mapper.UserMapper;
 import com.gabrielgermano.bugtracker.model.Role;
 import com.gabrielgermano.bugtracker.model.User;
 import com.gabrielgermano.bugtracker.payload.request.LoginRequest;
 import com.gabrielgermano.bugtracker.payload.request.RegisterRequest;
 import com.gabrielgermano.bugtracker.payload.response.TokenResponse;
+import com.gabrielgermano.bugtracker.payload.response.UserResponse;
 import com.gabrielgermano.bugtracker.repository.RoleRepository;
 import com.gabrielgermano.bugtracker.repository.UserRepository;
 import com.gabrielgermano.bugtracker.security.impl.UserDetailsImpl;
@@ -29,6 +31,7 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final UserMapper userMapper;
 
     private final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
@@ -36,12 +39,13 @@ public class AuthenticationService {
                                  UserRepository userRepository,
                                  RoleRepository roleRepository,
                                  AuthenticationManager authenticationManager,
-                                 JwtUtils jwtUtils) {
+                                 JwtUtils jwtUtils, UserMapper userMapper) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+        this.userMapper = userMapper;
     }
 
     public TokenResponse authenticateUser(LoginRequest loginRequest) {
@@ -68,7 +72,7 @@ public class AuthenticationService {
     }
 
 
-    public void registerUser(RegisterRequest registerRequest) {
+    public UserResponse registerUser(RegisterRequest registerRequest) {
 
         logger.info("Entering the registerUser method");
 
@@ -93,5 +97,9 @@ public class AuthenticationService {
                 roles);
 
         userRepository.save(newUser);
+
+        return userMapper.mapToUserResponse(newUser);
+
+
     }
 }

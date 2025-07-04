@@ -1,7 +1,9 @@
 package com.gabrielgermano.bugtracker.controller;
 
+import com.gabrielgermano.bugtracker.model.User;
 import com.gabrielgermano.bugtracker.payload.response.ProjectResponse;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.gabrielgermano.bugtracker.payload.request.ProjectMemberRequest;
@@ -25,23 +27,30 @@ public class ProjectMemberController {
 
     @PostMapping
     public ResponseEntity<List<UserResponse>> addUserToProject(@RequestBody @Valid ProjectMemberRequest request) {
-        return ResponseEntity.ok(projectMemberService.addUserToProject(request.projectId(), request.userId()));
+        List<UserResponse> users = projectMemberService.addUserToProject(request.projectId(), request.userId());
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping(params = "projectId")
     public ResponseEntity<List<UserResponse>> getAllUsersFromProject(@RequestParam("projectId") Long projectId) {
-        return ResponseEntity.ok(projectMemberService.getAllUsersFromProject(projectId));
+        List<UserResponse> users = projectMemberService.getAllUsersFromProject(projectId);
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping(params = "userId")
     public ResponseEntity<List<ProjectResponse>> getAllProjectsFromUser(@RequestParam("userId") Long userId) {
-        return ResponseEntity.ok(projectMemberService.getAllProjectFromUser(userId));
+        List<ProjectResponse> projects = projectMemberService.getAllProjectFromUser(userId);
+
+        return new ResponseEntity<>(projects, HttpStatus.OK);
     }
 
     @DeleteMapping
     public ResponseEntity<Void> deleteUserFromProject(@RequestBody @Valid ProjectMemberRequest request) {
         projectMemberService.deleteUserFromProject(request.projectId(), request.userId());
-        return ResponseEntity.noContent().build();
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
 }
