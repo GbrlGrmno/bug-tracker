@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -54,14 +53,14 @@ public class ProjectService {
         return projectMapper.mapToProjectResponse(projectRepository.save(project));
     }
 
-    public MessageResponse deleteProjectById(Long id) {
+    public void deleteProjectById(Long id) {
         logger.info("Entering deleteProjectById method inside the service layer");
         if (!projectRepository.existsById(id)) {
             logger.error("Project with id {} not found", id);
             throw new ProjectNotFoundException(id);
         } else {
             projectRepository.deleteById(id);
-            return new MessageResponse("Project with id " + id + " was successfully deleted.");
+            logger.info("Project successfully deleted");
         }
     }
 }
